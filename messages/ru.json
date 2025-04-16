@@ -1,0 +1,32 @@
+{
+	"navbar": {
+		"home": "Главная",
+		"contact": "Контакты",
+		"about": "О нас",
+		"signUp": "Зарегистрироваться",
+		"searchPlaceholder": "Что вы ищете?"
+	},
+	"footer": {
+		"exclusive": "Эксклюзив",
+		"subscribe": "Подписаться",
+		"discount": "Получите 10% скидку на первый заказ",
+		"emailPlaceholder": "Введите ваш email",
+		"support": "Поддержка",
+		"address1": "111 Биджой Сарани, Дакка,",
+		"address2": "DH 1515, Бангладеш.",
+		"email": "exclusive@gmail.com",
+		"phone": "+88015-88888-9999",
+		"account": "Аккаунт",
+		"myAccount": "Мой аккаунт",
+		"cart": "Корзина",
+		"wishlist": "Избранное",
+		"shop": "Магазин",
+		"quickLink": "Быстрые ссылки",
+		"privacy": "Политика конфиденциальности",
+		"terms": "Условия использования",
+		"faq": "Вопросы и ответы",
+		"contact": "Контакты",
+		"social": "Соцсети",
+		"copyright": "© Copyright Rimel 2022. Все права защищены"
+	}
+}

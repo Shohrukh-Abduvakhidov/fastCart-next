@@ -1,0 +1,33 @@
+{
+	"navbar": {
+		"home": "Саҳифаи асосӣ",
+		"contact": "Контактҳо",
+		"about": "Дар бораи мо",
+		"signUp": "Сабти ном",
+		"searchPlaceholder": "Шумо чӣ меҷӯед?"
+	},
+
+	"footer": {
+		"exclusive": "Эксклюзивӣ",
+		"subscribe": "Обуна шавед",
+		"discount": "10% тахфиф дар фармоиши аввал",
+		"emailPlaceholder": "Email-и худро ворид кунед",
+		"support": "Дастгирӣ",
+		"address1": "111 Бижой саронӣ, Дака,",
+		"address2": "DH 1515, Бангладеш.",
+		"email": "exclusive@gmail.com",
+		"phone": "+88015-88888-9999",
+		"account": "Ҳисоб",
+		"myAccount": "Ҳисоби ман",
+		"cart": "Сабад",
+		"wishlist": "Маъқулҳо",
+		"shop": "Магазин",
+		"quickLink": "Пайвандҳои зуд",
+		"privacy": "Сиёсати махфият",
+		"terms": "Шартҳои истифода",
+		"faq": "Саволу ҷавоб",
+		"contact": "Тамос",
+		"social": "Шабакаҳои иҷтимоӣ",
+		"copyright": "© Copyright Rimel 2022. Ҳама ҳуқуқҳо ҳифз шудаанд"
+	}
+}

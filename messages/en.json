@@ -1,0 +1,32 @@
+{
+	"navbar": {
+		"home": "Home",
+		"contact": "Contact",
+		"about": "About",
+		"signUp": "Sign Up",
+		"searchPlaceholder": "What are you looking for?"
+	},
+	"footer": {
+		"exclusive": "Exclusive",
+		"subscribe": "Subscribe",
+		"discount": "Get 10% off your first order",
+		"emailPlaceholder": "Enter your email",
+		"support": "Support",
+		"address1": "111 Bijoy sarani, Dhaka,",
+		"address2": "DH 1515, Bangladesh.",
+		"email": "exclusive@gmail.com",
+		"phone": "+88015-88888-9999",
+		"account": "Account",
+		"myAccount": "My Account",
+		"cart": "Cart",
+		"wishlist": "Wishlist",
+		"shop": "Shop",
+		"quickLink": "Quick Link",
+		"privacy": "Privacy Policy",
+		"terms": "Terms Of Use",
+		"faq": "FAQ",
+		"contact": "Contact",
+		"social": "Social",
+		"copyright": "© Copyright Rimel 2022. All right reserved"
+	}
+}
