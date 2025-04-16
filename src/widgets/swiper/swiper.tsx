@@ -2,7 +2,7 @@
 'use client'
 // Import Swiper React components
 import { Swiper, SwiperSlide } from 'swiper/react'
-
+import bannerImage from "@/app/assets/Frame 560.png"
 // Import Swiper styles
 import 'swiper/css'
 import 'swiper/css/navigation'
@@ -16,6 +16,7 @@ type Props = {
 // import required modules
 import { Autoplay, Pagination } from 'swiper/modules'
 import { ReactNode } from 'react'
+import Image from 'next/image'
 
 export default function SwiperComponent({ children }: Props) {
 	return (
@@ -24,7 +25,7 @@ export default function SwiperComponent({ children }: Props) {
 				spaceBetween={30}
 				centeredSlides={true}
 				autoplay={{
-					delay: 2500,
+					delay: 3000,
 					disableOnInteraction: false,
 				}}
 				pagination={{
@@ -33,10 +34,18 @@ export default function SwiperComponent({ children }: Props) {
 				modules={[Autoplay, Pagination]}
 				className='mySwiper'
 			>
-				<SwiperSlide>1</SwiperSlide>
-				<SwiperSlide>1</SwiperSlide>
-				<SwiperSlide>1</SwiperSlide>
-				<SwiperSlide>1</SwiperSlide>
+				<SwiperSlide>
+					<Image src={bannerImage} alt='banners'/>
+				</SwiperSlide>
+				<SwiperSlide>
+					<Image src={bannerImage} alt='banners'/>
+				</SwiperSlide>
+				<SwiperSlide>
+					<Image src={bannerImage} alt='banners'/>
+				</SwiperSlide>
+				<SwiperSlide>
+					<Image src={bannerImage} alt='banners'/>
+				</SwiperSlide>
 				{children}
 			</Swiper>
 		</>

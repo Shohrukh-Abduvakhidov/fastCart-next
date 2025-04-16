@@ -1,5 +1,6 @@
 'use client'
-import CategoryAside from '@/entities/features/categoryAside/category'
+import CategoryAside from '@/features/categoryAside/category'
+import ProfileModal from '@/features/profileSlice/ui/profileModal'
 import { FlashSalesTimer } from '@/widgets/actionSales/sales'
 import { PromoBanner } from '@/widgets/banner/banner'
 import { CategoryBrowser } from '@/widgets/brows category/browsCategory'
@@ -16,9 +17,10 @@ export default function HomePage() {
 	return (
 		<>
 			<header className='py-[50px] w-[95%]'>
+        <ProfileModal/>
 				<section className='w-[90%] lg:flex-row flex-col m-auto flex justify-between items-center'>
 					<CategoryAside />
-					<aside className='lg:w-[70%] w-[95%] h-[200px] lg:h-[300px]'>
+					<aside className='lg:w-[70%] w-full h-[200px] lg:h-[300px]'>
 						<SwiperComponent>
 							<SwiperSlide>1</SwiperSlide>
 						</SwiperComponent>

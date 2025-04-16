@@ -107,7 +107,6 @@ function calculateTimeLeft(targetDate: Date) {
 			seconds: Math.floor((difference / 1000) % 60),
 		}
 	}
-
 	return timeLeft
 }
 
