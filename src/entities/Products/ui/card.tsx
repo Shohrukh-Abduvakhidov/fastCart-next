@@ -1,11 +1,12 @@
-/* eslint-disable @typescript-eslint/no-unused-vars */
 /* eslint-disable @next/next/no-img-element */
+/* eslint-disable @typescript-eslint/no-unused-vars */
+// src/entities/Products/ui/ProductCard.tsx
 'use client'
 
-import { useState } from 'react'
 import { Heart, Eye, Star } from 'lucide-react'
 import { Button } from '@/shared/ui/button'
 import { cn } from '@/lib/utils'
+import { useState } from 'react'
 
 interface ProductCardProps {
 	id: string
@@ -48,7 +49,7 @@ export function ProductCard({
 				</div>
 			)}
 
-			{/* Wishlist and view icons */}
+			
 			<div className='absolute z-20 top-3 right-3 flex flex-col gap-3'>
 				<button className='bg-white p-2 rounded-full shadow-sm hover:bg-gray-100 transition-colors'>
 					<Heart className='h-5 w-5' />
@@ -58,12 +59,14 @@ export function ProductCard({
 				</button>
 			</div>
 
-			{/* Product image */}
-			<div className='relative h-48 w-full bg-white'>
+			<div className='w-full h-[300px] bg-white'>
 				<img
-					src={image || '/placeholder.svg'}
+					src={
+						`https://store-api.softclub.tj/images/${image}` ||
+						'/placeholder.svg'
+					}
 					alt={name}
-					className='object-contain p-4'
+					className='w-full h-full object-contain p-4'
 				/>
 			</div>
 
@@ -84,9 +87,11 @@ export function ProductCard({
 
 			{/* Product info */}
 			<div className='p-4'>
-				<h3 className='font-medium text-lg z-20 pt-[40px] text-[black]'>{name}</h3>
+				<h3 className='font-medium text-lg z-20 pt-[40px] text-[black]'>
+					{name}
+				</h3>
 				<div className='flex items-center mt-2'>
-					<span className='text-red-500 font-bold'>${price}</span>
+					<span className='text-red-500 font-bold'>${discount}</span>
 					<span className='text-gray-400 line-through ml-2'>
 						${originalPrice}
 					</span>

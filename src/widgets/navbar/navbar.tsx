@@ -18,11 +18,10 @@ const Navbar = () => {
 	const [mobileMenuOpen, setMobileMenuOpen] = useState(false)
 	const dispatch = useDispatch()
 	const stateModal = useSelector((state: RootState) => state.profile.isOpen)
-
 	return (
 		<>
 			<nav className='w-[95%] hidden md:flex py-[10px] items-center justify-between m-auto'>
-				<ProfileModal/>
+				<ProfileModal />
 				<div className='flex items-center justify-between gap-[70px]'>
 					<Image src={Logo || '/placeholder.svg'} alt='logo' />
 					<ul className='flex gap-[20px] items-center'>
@@ -30,13 +29,13 @@ const Navbar = () => {
 							<Link href={'/'}>{t('home')}</Link>
 						</li>
 						<li className=''>
-							<Link href={''}>{t('contact')}</Link>
+							<Link href={'/contact'}>{t('contact')}</Link>
 						</li>
 						<li className=''>
 							<Link href={'/about'}>{t('about')}</Link>
 						</li>
 						<li className=''>
-							<Link href={''}>{t('signUp')}</Link>
+							<Link href={'/registration'}>{t('signUp')}</Link>
 						</li>
 					</ul>
 				</div>
@@ -54,10 +53,12 @@ const Navbar = () => {
 							size={25}
 							className='cursor-pointer hover:translate-y-[-3px] hover:shadow-2xl'
 						/>
-						<ShoppingCart
-							size={25}
-							className='cursor-pointer hover:translate-y-[-3px] hover:shadow-2xl'
-						/>
+						<Link href={'/cart'}>
+							<ShoppingCart
+								size={25}
+								className='cursor-pointer hover:translate-y-[-3px] hover:shadow-2xl'
+							/>
+						</Link>
 						<User2
 							size={25}
 							className='cursor-pointer hover:translate-y-[-3px] hover:shadow-2xl'
