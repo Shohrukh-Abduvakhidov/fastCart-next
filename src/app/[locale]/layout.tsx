@@ -5,7 +5,7 @@ import { getMessages } from 'next-intl/server'
 import { routing } from '@/i18n/routing'
 import Navbar from '@/widgets/navbar/navbar'
 import Footer from '@/widgets/footer/footer'
-import { ReduxProvider } from '../assets/ReduxProvider'
+import { ReduxProvider } from '../providers/ReduxProvider'
 
 export default async function LocaleLayout({
 	children,

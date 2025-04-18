@@ -1,17 +1,17 @@
 'use client'
 
-import Image from 'next/image'
-import React, { useState } from 'react'
 import Logo from '@/app/assets/logo.png'
-import Link from 'next/link'
-import { useTranslations } from 'next-intl'
-import { Input } from '@/shared/ui/input'
-import { Heart, Menu, Search, ShoppingCart, User2 } from 'lucide-react'
-import LocaleSwitcher from '../localeSwitcher/switcher'
-import { useDispatch, useSelector } from 'react-redux'
-import { RootState } from '@/app/store'
 import { openModalProfile } from '@/features/profileSlice/model/profileSlice'
 import ProfileModal from '@/features/profileSlice/ui/profileModal'
+import { Input } from '@/shared/ui/input'
+import { RootState } from '@/store/store'
+import { Heart, Menu, Search, ShoppingCart, User2 } from 'lucide-react'
+import { useTranslations } from 'next-intl'
+import Image from 'next/image'
+import Link from 'next/link'
+import { useState } from 'react'
+import { useDispatch, useSelector } from 'react-redux'
+import LocaleSwitcher from '../localeSwitcher/switcher'
 
 const Navbar = () => {
 	const t = useTranslations('navbar')

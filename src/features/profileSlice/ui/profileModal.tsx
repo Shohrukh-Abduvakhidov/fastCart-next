@@ -1,7 +1,6 @@
-import { RootState } from '@/app/store'
+import { RootState } from '@/store/store'
 import { LogOutIcon, ShoppingBag, User2 } from 'lucide-react'
 import Link from 'next/link'
-import React from 'react'
 import { useSelector } from 'react-redux'
 
 const ProfileModal = () => {

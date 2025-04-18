@@ -7,6 +7,8 @@ import { Heart, Eye, Star } from 'lucide-react'
 import { Button } from '@/shared/ui/button'
 import { cn } from '@/lib/utils'
 import { useState } from 'react'
+import Link from 'next/link'
+import { useAddProductInCartMutation } from '@/features/cart/api/cartApi'
 
 interface ProductCardProps {
 	id: string
@@ -30,8 +32,15 @@ export function ProductCard({
 	reviewCount,
 }: ProductCardProps) {
 	const [isHovered, setIsHovered] = useState(false)
+	const [addProductInCart] = useAddProductInCartMutation()
 
-	// Generate an array of 5 stars
+	async function addProductCart() {
+		try {
+			await addProductInCart(id).unwrap()
+		} catch (error) {
+			console.error(error)
+		}
+	}
 	const stars = Array(5)
 		.fill(0)
 		.map((_, index) => index < Math.floor(rating))
@@ -42,21 +51,22 @@ export function ProductCard({
 			onMouseEnter={() => setIsHovered(true)}
 			onMouseLeave={() => setIsHovered(false)}
 		>
-			{/* Discount badge */}
 			{discount && (
 				<div className='absolute z-20 top-3 left-3 bg-red-500 text-white text-sm font-medium px-2 py-1 rounded'>
 					-{discount}%
 				</div>
 			)}
 
-			
 			<div className='absolute z-20 top-3 right-3 flex flex-col gap-3'>
 				<button className='bg-white p-2 rounded-full shadow-sm hover:bg-gray-100 transition-colors'>
 					<Heart className='h-5 w-5' />
 				</button>
-				<button className='bg-white p-2 rounded-full shadow-sm hover:bg-gray-100 transition-colors'>
+				<Link
+					href={`/products/${id}`}
+					className='bg-white p-2 rounded-full shadow-sm hover:bg-gray-100 transition-colors'
+				>
 					<Eye className='h-5 w-5' />
-				</button>
+				</Link>
 			</div>
 
 			<div className='w-full h-[300px] bg-white'>
@@ -70,7 +80,6 @@ export function ProductCard({
 				/>
 			</div>
 
-			{/* Add to cart button (visible on hover) */}
 			<div
 				className={cn(
 					'absolute bottom-0 left-0 right-0 transition-transform duration-300 transform',
@@ -78,14 +87,14 @@ export function ProductCard({
 				)}
 			>
 				<Button
+					onClick={addProductCart}
 					variant='default'
-					className='w-full rounded-none bg-black hover:bg-black/80 h-12'
+					className='w-full cursor-pointer rounded-none bg-black hover:bg-black/80 h-12'
 				>
 					Add To Cart
 				</Button>
 			</div>
 
-			{/* Product info */}
 			<div className='p-4'>
 				<h3 className='font-medium text-lg z-20 pt-[40px] text-[black]'>
 					{name}

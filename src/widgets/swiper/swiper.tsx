@@ -17,8 +17,10 @@ type Props = {
 import { Autoplay, Pagination } from 'swiper/modules'
 import { ReactNode } from 'react'
 import Image from 'next/image'
-
-export default function SwiperComponent({ children }: Props) {
+import s25Image from "@/app/assets/s25 samsung.jpg"
+import ps5Image from "@/app/assets/ps5Image.jpg"
+import rogPhone from "@/app/assets/rogPhone.jpg"
+export default function SwiperComponent() {
 	return (
 		<>
 			<Swiper
@@ -38,15 +40,14 @@ export default function SwiperComponent({ children }: Props) {
 					<Image src={bannerImage} alt='banners'/>
 				</SwiperSlide>
 				<SwiperSlide>
-					<Image src={bannerImage} alt='banners'/>
+					<Image src={s25Image} alt='s25Image'/>
 				</SwiperSlide>
 				<SwiperSlide>
-					<Image src={bannerImage} alt='banners'/>
+					<Image src={ps5Image} alt='banners'/>
 				</SwiperSlide>
 				<SwiperSlide>
-					<Image src={bannerImage} alt='banners'/>
+					<Image src={rogPhone} alt='banners'/>
 				</SwiperSlide>
-				{children}
 			</Swiper>
 		</>
 	)
