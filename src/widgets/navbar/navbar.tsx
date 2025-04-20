@@ -14,29 +14,37 @@ import { useDispatch, useSelector } from 'react-redux'
 import LocaleSwitcher from '../localeSwitcher/switcher'
 import CartIcon from '@/shared/ui/cartIcon'
 import WishListIcon from '@/shared/ui/wishListIcon'
+import MobileDrawer from '@/shared/ui/mobileDrawer'
 
 const Navbar = () => {
 	const t = useTranslations('navbar')
-	const [mobileMenuOpen, setMobileMenuOpen] = useState(false)
+	const [open, setOpen] = useState<boolean>(false)
 	const dispatch = useDispatch()
 	const stateModal = useSelector((state: RootState) => state.profile.isOpen)
+
 	return (
 		<>
+			{/* Desktop Navbar */}
 			<nav className='w-[95%] hidden md:flex py-[10px] items-center justify-between m-auto'>
 				<ProfileModal />
 				<div className='flex items-center justify-between gap-[70px]'>
-					<Image src={Logo || '/placeholder.svg'} alt='logo' />
+					<Image
+						src={Logo || '/placeholder.svg'}
+						alt='logo'
+						width={150}
+						height={50}
+					/>
 					<ul className='flex gap-[20px] items-center'>
-						<li className=''>
+						<li>
 							<Link href={'/'}>{t('home')}</Link>
 						</li>
-						<li className=''>
+						<li>
 							<Link href={'/contact'}>{t('contact')}</Link>
 						</li>
-						<li className=''>
+						<li>
 							<Link href={'/about'}>{t('about')}</Link>
 						</li>
-						<li className=''>
+						<li>
 							<Link href={'/registration'}>{t('signUp')}</Link>
 						</li>
 					</ul>
@@ -62,10 +70,12 @@ const Navbar = () => {
 				</div>
 			</nav>
 
+			{/* Mobile Navbar */}
 			<nav className='md:hidden w-full bg-white'>
+				<MobileDrawer open={open} setOpen={setOpen} />
 				<div className='flex items-center justify-between px-4 py-3 border-b'>
 					<div className='flex gap-[20px] items-center'>
-						<button onClick={() => setMobileMenuOpen(!mobileMenuOpen)}>
+						<button onClick={() => setOpen(true)}>
 							<Menu size={24} />
 						</button>
 						<h1 className='text-xl font-bold'>Exclusive</h1>
@@ -83,7 +93,7 @@ const Navbar = () => {
 				<div className='p-4'>
 					<div className='relative'>
 						<Input
-							placeholder='Search'
+							placeholder={t('searchPlaceholder')}
 							className='w-full border border-gray-300 rounded-md py-2 pl-3 pr-10'
 						/>
 						<button className='absolute right-3 top-1/2 transform -translate-y-1/2'>

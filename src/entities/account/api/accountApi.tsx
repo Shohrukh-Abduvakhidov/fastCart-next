@@ -5,6 +5,13 @@ export const AccountApi = baseApi.injectEndpoints({
 		getProfileById: builder.query({
 			query: id => `/UserProfile/get-user-profile-by-id?id=${id}`,
 		}),
+		editUserProfile: builder.mutation({
+			query: body => ({
+				url: '/UserProfile/update-user-profile',
+				method: 'PUT',
+				body: body,
+			}),
+		}),
 	}),
 })
-export const { useGetProfileByIdQuery } = AccountApi
+export const { useGetProfileByIdQuery, useEditUserProfileMutation } = AccountApi

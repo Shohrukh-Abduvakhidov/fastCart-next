@@ -1,29 +1,65 @@
 /* eslint-disable @next/next/no-img-element */
-/* eslint-disable @typescript-eslint/no-unused-vars */
 'use client'
 import { Input } from '@/shared/ui/input'
 import React, { useEffect, useState } from 'react'
-import { useGetProfileByIdQuery } from '../api/accountApi'
+import {
+	useEditUserProfileMutation,
+	useGetProfileByIdQuery,
+} from '../api/accountApi'
 import { IDecode } from '../model/types'
+import Loading from '@/shared/ui/loading/loading'
 
-const Account = () => {
+const Account: React.FC = () => {
 	const [user, setUser] = useState<IDecode | null>(null)
-	const { data } = useGetProfileByIdQuery(user?.sid)
-	const [firstName, setFirstName] = useState<string>(
-		data?.data?.firstName || ''
-	)
-	const [lastName, setLastName] = useState<string>(data?.data?.lastName || '')
-	const [email, setEmail] = useState<string>(data?.data?.email || '')
-	const [phone, setPhone] = useState<string>(data?.data?.phoneNumber || '')
-	const [dob, setDob] = useState<string>(data?.data?.dob || '')
+	const { data, isLoading, refetch } = useGetProfileByIdQuery(user?.sid, {
+		skip: !user?.sid,
+	})
+	const [editUserProfile] = useEditUserProfileMutation()
+	const [firstName, setFirstName] = useState<string>('')
+	const [lastName, setLastName] = useState<string>('')
+	const [email, setEmail] = useState<string>('')
+	const [phone, setPhone] = useState<string>('')
+	const [dob, setDob] = useState<string>('')
+	const [imageS, setImageS] = useState<File | null>(null)
 
 	useEffect(() => {
 		setUser(JSON.parse(localStorage.getItem('decode_token') || '{}'))
 	}, [])
 
-	console.log('====================================')
-	console.log(data)
-	console.log('====================================')
+	useEffect(() => {
+		if (data) {
+			setFirstName(data?.data?.firstName || '')
+			setLastName(data?.data?.lastName || '')
+			setEmail(data?.data?.email || '')
+			setPhone(data?.data?.phoneNumber || '')
+			setDob(data?.data?.dob || '')
+		}
+	}, [data])
+
+	const editUser = async (event: React.FormEvent) => {
+		event.preventDefault()
+
+		const formData = new FormData()
+		formData.append('FirstName', firstName)
+		formData.append('LastName', lastName)
+		formData.append('Email', email)
+		formData.append('PhoneNumber', phone)
+		formData.append('Dob', dob)
+		if (imageS) {
+			formData.append('image', imageS)
+		}
+
+		try {
+			await editUserProfile(formData).unwrap()
+			refetch()
+		} catch (error) {
+			console.error(error)
+		}
+	}
+
+	if (isLoading) {
+		return <Loading/>
+	}
 
 	return (
 		<main className='flex-1 p-6 flex flex-col items-center'>
@@ -35,15 +71,19 @@ const Account = () => {
 					</h2>
 					<img
 						src={
-							`https://store-api.softclub.tj/imaegs/${data?.data?.image}` ||
+							`https://store-api.softclub.tj/images/${data?.data?.image}` ||
 							'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSgF2suM5kFwk9AdFjesEr8EP1qcyUvah8G7w&s'
 						}
-						alt=''
+						alt='Profile Image'
 						className='w-[70px] h-[70px] rounded-full border'
+					/>
+					<input
+						type='file'
+						onChange={e => setImageS(e.target.files?.[0] || null)}
 					/>
 				</div>
 
-				<form className='space-y-6'>
+				<form onSubmit={editUser} className='space-y-6'>
 					<div className='grid grid-cols-1 md:grid-cols-2 gap-4'>
 						<Input
 							value={firstName}
