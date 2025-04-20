@@ -5,13 +5,15 @@ import { openModalProfile } from '@/features/profileSlice/model/profileSlice'
 import ProfileModal from '@/features/profileSlice/ui/profileModal'
 import { Input } from '@/shared/ui/input'
 import { RootState } from '@/store/store'
-import { Heart, Menu, Search, ShoppingCart, User2 } from 'lucide-react'
+import { Menu, Search, User2 } from 'lucide-react'
 import { useTranslations } from 'next-intl'
 import Image from 'next/image'
 import Link from 'next/link'
 import { useState } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import LocaleSwitcher from '../localeSwitcher/switcher'
+import CartIcon from '@/shared/ui/cartIcon'
+import WishListIcon from '@/shared/ui/wishListIcon'
 
 const Navbar = () => {
 	const t = useTranslations('navbar')
@@ -49,16 +51,8 @@ const Navbar = () => {
 						<Search className='absolute top-2 right-2' size={20} />
 					</div>
 					<div className='flex gap-[20px] items-center'>
-						<Heart
-							size={25}
-							className='cursor-pointer hover:translate-y-[-3px] hover:shadow-2xl'
-						/>
-						<Link href={'/cart'}>
-							<ShoppingCart
-								size={25}
-								className='cursor-pointer hover:translate-y-[-3px] hover:shadow-2xl'
-							/>
-						</Link>
+						<WishListIcon />
+						<CartIcon />
 						<User2
 							size={25}
 							className='cursor-pointer hover:translate-y-[-3px] hover:shadow-2xl'
@@ -70,18 +64,19 @@ const Navbar = () => {
 
 			<nav className='md:hidden w-full bg-white'>
 				<div className='flex items-center justify-between px-4 py-3 border-b'>
-					<button onClick={() => setMobileMenuOpen(!mobileMenuOpen)}>
-						<Menu size={24} />
-					</button>
-					<h1 className='text-xl font-bold'>Exclusive</h1>
+					<div className='flex gap-[20px] items-center'>
+						<button onClick={() => setMobileMenuOpen(!mobileMenuOpen)}>
+							<Menu size={24} />
+						</button>
+						<h1 className='text-xl font-bold'>Exclusive</h1>
+					</div>
 					<div className='flex items-center gap-4'>
-						<div className='relative'>
-							<ShoppingCart size={24} />
-							<span className='absolute -top-2 -right-2 bg-red-500 text-white text-xs rounded-full w-5 h-5 flex items-center justify-center'>
-								2
-							</span>
-						</div>
-						<User2 size={24} />
+						<CartIcon />
+						<User2
+							size={25}
+							className='cursor-pointer hover:translate-y-[-3px] hover:shadow-2xl'
+							onClick={() => dispatch(openModalProfile(!stateModal))}
+						/>
 					</div>
 				</div>
 

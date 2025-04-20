@@ -17,10 +17,8 @@ export default function LocaleSwitcher() {
 
 	const handleChange = (e: ChangeEvent<HTMLSelectElement>) => {
 		const newLocale = e.target.value
-
-		
 		const segments = pathname.split('/')
-		segments[1] = newLocale 
+		segments[1] = newLocale
 		const newPath = segments.join('/')
 
 		router.push(newPath)
@@ -36,7 +34,7 @@ export default function LocaleSwitcher() {
 				<option key={value} value={value}>
 					{label}
 				</option>
-			))}
+			))}	
 		</select>
 	)
 }

@@ -1,8 +1,8 @@
 'use client'
 /* eslint-disable @next/next/no-img-element */
 import Link from 'next/link'
-import React, { useState, useEffect } from 'react'
 import {
+	useClearCartMutation,
 	useDeleteProductInCartMutation,
 	useGetCartProductsQuery,
 } from '../api/cartApi'
@@ -10,6 +10,7 @@ import Loading from '@/shared/ui/loading/loading'
 import { ICartProduct } from '../model/types'
 import { Button } from '@/shared/ui/button'
 import { X } from 'lucide-react'
+import Counter from '@/shared/ui/counter'
 
 const CartComponent = () => {
 	const {
@@ -19,27 +20,18 @@ const CartComponent = () => {
 		refetch,
 	} = useGetCartProductsQuery(undefined)
 	const [deleteProductInCart] = useDeleteProductInCartMutation()
-	const [quantities, setQuantities] = useState<number[]>([])
-
-	useEffect(() => {
-		if (productsCart?.data[0]?.productsInCart) {
-			setQuantities(
-				productsCart.data[0].productsInCart.map(
-					(item: ICartProduct) => item.quantity
-				)
-			)
-		}
-	}, [productsCart])
-
-	const handleQuantityChange = (index: number, value: number) => {
-		const newQuantities = [...quantities]
-		newQuantities[index] = value
-		setQuantities(newQuantities)
-	}
-
+	const [clearCart] = useClearCartMutation()
 	async function deleteProduct(id: number) {
 		try {
 			await deleteProductInCart(id).unwrap()
+			refetch()
+		} catch (error) {
+			console.error(error)
+		}
+	}
+	async function clearInCart() {
+		try {
+			await clearCart().unwrap()
 			refetch()
 		} catch (error) {
 			console.error(error)
@@ -51,12 +43,17 @@ const CartComponent = () => {
 
 	return (
 		<div className='p-4 md:p-10'>
-			<h1 className='text-xl font-semibold mb-6'>Cart</h1>
+			<h1 className='text-xl font-semibold mb-6'>
+				Cart{' '}
+				<span className='text-black'>
+					({productsCart?.data[0]?.totalProducts})
+				</span>
+			</h1>
 			<div className='flex flex-col md:flex-row md:justify-between gap-8'>
 				<div className='w-full md:w-2/3'>
 					<div className='space-y-6'>
 						{productsCart?.data[0]?.productsInCart?.map(
-							(product: ICartProduct, index: number) => (
+							(product: ICartProduct) => (
 								<div
 									key={product.id}
 									className='flex items-center justify-between border p-4 rounded'
@@ -76,25 +73,19 @@ const CartComponent = () => {
 											</p>
 										</div>
 									</div>
-									<div className='flex items-center gap-4'>
-										<input
-											type='number'
-											min={1}
-											value={quantities[index] || 1}
-											onChange={e =>
-												handleQuantityChange(index, Number(e.target.value))
-											}
-											className='w-14 border-2 cursor-pointer border-[#383838] rounded text-center'
-										/>
-										<p className='font-semibold'>
-											{product?.product?.discountPrice}$
-										</p>
-										<Button
-											onClick={() => deleteProduct(product.id)}
-											className='bg-[red] p-1 rounded-full cursor-pointer'
-										>
-											<X className='text-[#fff] font-bold' size={20} />
-										</Button>
+									<div className='flex lg:flex-row flex-col items-center gap-4'>
+										<Counter id={product.id} cnt={product.quantity} />
+										<div className='flex gap-[20px] items-center'>
+											<p className='font-semibold'>
+												{product?.product?.discountPrice * product.quantity}$
+											</p>
+											<Button
+												onClick={() => deleteProduct(product.id)}
+												className='bg-[red] p-1 rounded-full cursor-pointer'
+											>
+												<X className='text-[#fff] font-bold' size={20} />
+											</Button>
+										</div>
 									</div>
 								</div>
 							)
@@ -108,10 +99,13 @@ const CartComponent = () => {
 							</Button>
 						</Link>
 						<div className='flex gap-2'>
-							<Button className='border cursor-pointer border-black px-6 py-2 rounded'>
+							<Button onClick={() => refetch()} className='border cursor-pointer border-black px-6 py-2 rounded'>
 								Update Cart
 							</Button>
-							<Button className='border cursor-pointer border-black px-6 py-2 rounded'>
+							<Button
+								onClick={clearInCart}
+								className='border cursor-pointer border-black px-6 py-2 rounded'
+							>
 								Remove all
 							</Button>
 						</div>

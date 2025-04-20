@@ -1,9 +1,10 @@
 'use client'
+import RegistrationForm from '@/entities/registrationForm/ui/registrationForm'
 /* eslint-disable @next/next/no-img-element */
-import React from 'react'
-import { Input } from '@/shared/ui/input'
+
 import { Button } from '@/shared/ui/button'
 import { Separator } from '@/shared/ui/separator'
+import Link from 'next/link'
 
 const SignupForm = () => {
 	return (
@@ -15,16 +16,7 @@ const SignupForm = () => {
 				<p className='text-sm text-center text-gray-600 mt-1'>
 					Enter your details below
 				</p>
-
-				<form className='mt-6 space-y-4'>
-					<Input type='text' placeholder='Name' />
-					<Input type='email' placeholder='Email or phone number' />
-					<Input type='password' placeholder='Password' />
-					<Button type='submit' className='w-full bg-[#DB4444] cursor-pointer'>
-						Create Account
-					</Button>
-				</form>
-
+				<RegistrationForm />
 				<div className='my-4'>
 					<Separator className='mb-2' />
 					<p className='text-center text-sm text-gray-500'>or</p>
@@ -42,9 +34,9 @@ const SignupForm = () => {
 
 				<p className='mt-6 text-sm text-center text-gray-700'>
 					Already have account?{' '}
-					<a href='#' className='text-black underline'>
+					<Link href='/login' className='text-black underline'>
 						Log in
-					</a>
+					</Link>
 				</p>
 			</div>
 		</div>

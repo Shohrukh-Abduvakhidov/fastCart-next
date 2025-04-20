@@ -3,6 +3,7 @@ import React from 'react'
 import { useGetCategoryQuery } from '../api/categoryApi'
 import Loading from '@/shared/ui/loading/loading'
 import { ICategory } from '../model/types'
+import Link from 'next/link'
 
 const CategoryAside = () => {
 	const { data: categories, isLoading, error } = useGetCategoryQuery(undefined)
@@ -18,9 +19,12 @@ const CategoryAside = () => {
 						key={category.id}
 						className='cursor-pointer py-2 px-1 hover:bg-gray-100 rounded'
 					>
-						<p className='text-[14px] text-black hover:underline'>
+						<Link
+							href={'/products'}
+							className='text-[14px] text-black hover:underline'
+						>
 							{category.categoryName}
-						</p>
+						</Link>
 					</li>
 				))}
 			</ul>

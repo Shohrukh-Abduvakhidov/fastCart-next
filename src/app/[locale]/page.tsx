@@ -30,6 +30,7 @@ export default function HomePage() {
 				<ProductList />
 				<CategoryBrowser />
 				<PromoBanner targetDate={targetDate} onComplete={onComplete} />
+				<ProductList style='grid'/>
 				<NewArrivals />
 			</main>
 		</>

@@ -1,3 +1,4 @@
+/* eslint-disable react-hooks/rules-of-hooks */
 'use client'
 /* eslint-disable @next/next/no-img-element */
 import { useGetProductByIdQuery } from '@/entities/Products/api/productApi'
@@ -8,14 +9,20 @@ import { useParams } from 'next/navigation'
 
 export default function ProductPage() {
 	const params = useParams()
-	const productId = params.id
+	const productId = Number(params.id)
 	console.log(productId)
+
+	if (isNaN(productId)) {
+		return <div>Invalid product ID</div>
+	}
+
 	const { data: product, error, isLoading } = useGetProductByIdQuery(productId)
+
 	if (isLoading) {
-		return <Loading/>
+		return <Loading />
 	}
 	if (error) {
-		return <div>Loading....</div>
+		return <div>Error loading product</div>
 	}
 
 	console.log(product?.data)
@@ -30,13 +37,17 @@ export default function ProductPage() {
 				</h1>
 
 				<p className='text-2xl text-red-600 font-semibold'>
-          {product?.data?.discountPrice}$ <span className='text-gray-700 line-through'> {product?.data?.price}$</span>
-        </p>
+					{product?.data?.discountPrice}${' '}
+					<span className='text-gray-700 line-through'>
+						{' '}
+						{product?.data?.price}$
+					</span>
+				</p>
 
 				<p className='text-gray-600 text-sm leading-relaxed'>
 					{product?.data?.description}
 				</p>
-				
+
 				<div>
 					<span className='text-sm font-medium text-gray-700'>Colours:</span>
 					<div className='flex space-x-2 mt-2'>
@@ -44,16 +55,19 @@ export default function ProductPage() {
 						<button className='w-6 h-6 rounded-full bg-black border-2 border-gray-300' />
 					</div>
 				</div>
-				
+
 				<div>
 					<span className='text-sm font-medium text-gray-700'>Size:</span>
-          <span className='text-sm font-medium text-gray-700'> {product?.data?.size}</span>
+					<span className='text-sm font-medium text-gray-700'>
+						{' '}
+						{product?.data?.size}
+					</span>
 				</div>
-				
+
 				<Button className='w-full cursor-pointer md:w-auto bg-red-500 text-white py-2 px-6 rounded-md hover:bg-red-600'>
 					Buy Now
 				</Button>
-				
+
 				<div className='text-sm text-gray-600 space-y-1'>
 					<p>Free Delivery: Enter your postal code for delivery availability</p>
 					<p>Return Delivery: Free 30 days delivery returns</p>

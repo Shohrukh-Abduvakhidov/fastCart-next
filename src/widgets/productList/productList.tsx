@@ -7,7 +7,6 @@ import Loading from '@/shared/ui/loading/loading'
 
 export function ProductList({ style }: { style?: string }) {
 	const { data: products, isLoading, error } = useGetProductsQuery(undefined)
-
 	if (isLoading) {
 		return <Loading />
 	}
@@ -28,8 +27,8 @@ export function ProductList({ style }: { style?: string }) {
 						price={product.price}
 						originalPrice={product.price}
 						discount={product.discountPrice}
-						rating={0}
-						reviewCount={0}
+						rating={3}
+						reviewCount={250}
 					/>
 				))}
 			</div>
@@ -37,7 +36,10 @@ export function ProductList({ style }: { style?: string }) {
 	}
 
 	return (
-		<div className='w-[90%] m-auto overflow-x-auto py-[50px]'>
+		<div
+			style={{ scrollbarWidth: 'none' }}
+			className='w-[90%] m-auto overflow-x-auto py-[50px]'
+		>
 			<div className='flex items-center gap-[20px] flex-nowrap'>
 				{products?.data?.products?.map((product: IProduct) => (
 					<div key={product.id} className='min-w-[250px] max-w-[300px]'>
@@ -48,8 +50,8 @@ export function ProductList({ style }: { style?: string }) {
 							price={product.price}
 							originalPrice={product.price}
 							discount={product.discountPrice}
-							rating={0}
-							reviewCount={0}
+							rating={5}
+							reviewCount={250}
 						/>
 					</div>
 				))}

@@ -1,90 +1,125 @@
 'use client'
-/* eslint-disable @next/next/no-img-element */
-import { useParams } from 'next/navigation'
-import Image from 'next/image'
-import React from 'react'
-import ps5 from '@/app/assets/ps5-slim-goedkope-playstation_large 1.png'
-
-export default function ProductPage() {
-	const params = useParams()
-	const productId = params.id
-	console.log(productId)
-
+import { useGetFilteredProductsQuery } from '@/entities/Products/api/productApi'
+import { IProduct } from '@/entities/Products/model/productTypes'
+import { ProductCard } from '@/entities/Products/ui/card'
+import BrandFilter from '@/features/BrandFillter/ui/brandFillter'
+import CategoriesFilter from '@/features/categoryAside/ui/categoriesFilter'
+import { Button } from '@/shared/ui/button'
+import Loading from '@/shared/ui/loading/loading'
+import PriceRangeSlider from '@/shared/ui/priceRange/priceRange'
+import { ChevronDown, X } from 'lucide-react'
+import { useState } from 'react'
+export default function ProductListing() {
+	const [mobileFiltersOpen, setMobileFiltersOpen] = useState(false)
+	const [priceRange, setPriceRange] = useState<[number, number]>([1, 100000])
+	const [changeBrand, setChangeBrand] = useState<number | null>(null)
+	const [changeCategory, setChangeCategory] = useState<number | null>(null)
+	const [pagination, setPagination] = useState<number>(1)
+	const { data, isLoading, error } = useGetFilteredProductsQuery({
+		MinPrice: priceRange[0],
+		MaxPrice: priceRange[1],
+		BrandId: changeBrand,
+		CategoryId: changeCategory,
+		PageNumber: pagination,
+		PageSize: 10,
+	})
+	if (isLoading) return <Loading />
+	if (error)
+		return <p className='text-center text-red-500'>Error loading products</p>
 	return (
-		<div className='p-6 max-w-7xl mx-auto grid md:grid-cols-2 gap-10'>
-			{/* Left Side: Images */}
-			<div className='flex flex-col md:flex-row gap-4'>
-				{/* Thumbnails */}
-				<div className='flex md:flex-col overflow-y-scroll gap-4 overflow-x-auto md:overflow-y-auto max-h-[500px]'>
-					{[1, 2, 3, 4].map((_, idx) => (
-						<img
-							key={idx}
-							src={`/controller-${idx + 1}.jpg`}
-							alt={`Thumbnail ${idx + 1}`}
-							className='w-20 h-20 object-cover rounded-lg border cursor-pointer'
-						/>
-					))}
+		<div className='container mx-auto px-4 py-8'>
+			<div className='flex flex-col md:flex-row gap-6'>
+				{/* Mobile Filter Button */}
+				<div className='md:hidden flex justify-between items-center mb-4'>
+					<h1 className='text-xl font-semibold'>Products</h1>
+					<Button
+						variant='outline'
+						onClick={() => setMobileFiltersOpen(true)}
+						className='flex items-center gap-2'
+					>
+						Filters <ChevronDown className='h-4 w-4' />
+					</Button>
 				</div>
 
-				{/* Main Image */}
-				<div className='flex-1'>
-					<Image
-						src={ps5}
-						alt='Main Product Image'
-						className='w-full h-full object-cover rounded-xl'
+				{/* Mobile Filters Sidebar */}
+				{mobileFiltersOpen && (
+					<div className='fixed inset-0 z-50 bg-white overflow-y-auto p-4'>
+						<div className='flex justify-between items-center mb-6'>
+							<h2 className='text-xl font-semibold'>Filters</h2>
+							<Button
+								variant='ghost'
+								size='icon'
+								onClick={() => setMobileFiltersOpen(false)}
+							>
+								<X className='h-6 w-6' />
+							</Button>
+						</div>
+						<BrandFilter setChangeBrand={setChangeBrand} />
+						<CategoriesFilter setChangeCategory={setChangeCategory} />
+						<PriceRangeSlider
+							min={0}
+							max={1000000}
+							value={priceRange}
+							onChange={(val: number[]) => setPriceRange([val[0], val[1]])}
+						/>
+					</div>
+				)}
+
+				{/* Desktop Filters Sidebar */}
+				<div className='hidden md:block w-64'>
+					<CategoriesFilter setChangeCategory={setChangeCategory} />
+					<BrandFilter setChangeBrand={setChangeBrand} />
+					<PriceRangeSlider
+						min={0}
+						max={1000000}
+						value={priceRange}
+						onChange={val => setPriceRange([val[0], val[1]])}
 					/>
 				</div>
-			</div>
 
-			{/* Right Side: Product Info */}
-			<div className='space-y-6'>
-				<h1 className='text-3xl font-bold text-gray-800'>
-					Havic HV G-92 Gamepad
-				</h1>
-
-				<p className='text-2xl text-red-600 font-semibold'>$192.00</p>
-
-				<p className='text-gray-600 text-sm leading-relaxed'>
-					PlayStation Controller Skin high quality acrylic material for PS5
-					Controller. Customize your controller with style and protect it from
-					scratches and damage.
-				</p>
-
-				{/* Color Options */}
-				<div>
-					<span className='text-sm font-medium text-gray-700'>Colours:</span>
-					<div className='flex space-x-2 mt-2'>
-						<button className='w-6 h-6 rounded-full bg-red-500 border-2 border-gray-300' />
-						<button className='w-6 h-6 rounded-full bg-black border-2 border-gray-300' />
+				<div className='flex-1'>
+					<div className='flex justify-between items-center mb-6'>
+						<h1 className='hidden md:block text-xl font-semibold'>Products</h1>
+						<div className='flex items-center gap-2'>
+							<span className='text-sm text-gray-500'>
+								Showing {data?.data?.products?.length || 0} items
+							</span>
+							<Button variant='outline' className='flex items-center gap-2'>
+								Popularity <ChevronDown className='h-4 w-4' />
+							</Button>
+						</div>
 					</div>
-				</div>
 
-				{/* Size Options */}
-				<div>
-					<span className='text-sm font-medium text-gray-700'>Size:</span>
-					<div className='flex space-x-2 mt-2'>
-						{['S', 'M', 'L', 'XL'].map(size => (
-							<button
-								key={size}
-								className='w-10 h-10 border text-sm rounded-md hover:bg-gray-100'
-							>
-								{size}
-							</button>
-						))}
+					<div className='grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-3 gap-6'>
+						{data ? (
+							data?.data?.products?.map((product: IProduct) => (
+								<ProductCard
+									key={product.id}
+									id={String(product.id)}
+									name={product.productName}
+									price={product.price}
+									discount={product.discountPrice}
+									image={product.image}
+									originalPrice={product.price}
+									rating={3}
+									reviewCount={200}
+								/>
+							))
+						) : (
+							<div className='flex items-center justify-center inset-0'>
+								<h1 className='text-[black] text-[50px]'>NOT FOUND!</h1>
+							</div>
+						)}
 					</div>
-				</div>
 
-				{/* CTA */}
-				<button className='w-full md:w-auto bg-red-500 text-white py-2 px-6 rounded-md hover:bg-red-600'>
-					Buy Now
-				</button>
-
-				{/* Additional Info */}
-				<div className='text-sm text-gray-600 space-y-1'>
-					<p>
-						📦 Free Delivery: Enter your postal code for delivery availability
-					</p>
-					<p>🔄 Return Delivery: Free 30 days delivery returns</p>
+					<div className='mt-8 flex justify-center'>
+						<Button
+							onClick={() => setPagination(pagination + 1)}
+							className='bg-red-500 hover:bg-red-600 text-white px-8'
+						>
+							More Products
+						</Button>
+					</div>
 				</div>
 			</div>
 		</div>

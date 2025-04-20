@@ -8,9 +8,14 @@ import { Button } from '@/shared/ui/button'
 import { cn } from '@/lib/utils'
 import { useState } from 'react'
 import Link from 'next/link'
-import { useAddProductInCartMutation } from '@/features/cart/api/cartApi'
+import {
+	useAddProductInCartMutation,
+	useGetCartProductsQuery,
+} from '@/features/cart/api/cartApi'
+import WishListBtn from '@/shared/ui/wishListBtn'
+import { original } from '@reduxjs/toolkit'
 
-interface ProductCardProps {
+export interface ProductCardProps {
 	id: string
 	name: string
 	image: string
@@ -33,10 +38,12 @@ export function ProductCard({
 }: ProductCardProps) {
 	const [isHovered, setIsHovered] = useState(false)
 	const [addProductInCart] = useAddProductInCartMutation()
+	const { refetch } = useGetCartProductsQuery(undefined)
 
 	async function addProductCart() {
 		try {
 			await addProductInCart(id).unwrap()
+			refetch()
 		} catch (error) {
 			console.error(error)
 		}
@@ -53,14 +60,21 @@ export function ProductCard({
 		>
 			{discount && (
 				<div className='absolute z-20 top-3 left-3 bg-red-500 text-white text-sm font-medium px-2 py-1 rounded'>
-					-{discount}%
+					-{Math.round(((originalPrice - discount) / originalPrice) * 100)}%
 				</div>
 			)}
 
 			<div className='absolute z-20 top-3 right-3 flex flex-col gap-3'>
-				<button className='bg-white p-2 rounded-full shadow-sm hover:bg-gray-100 transition-colors'>
-					<Heart className='h-5 w-5' />
-				</button>
+				<WishListBtn
+					name={name}
+					price={price}
+					discount={discount}
+					id={id}
+					image={image}
+					originalPrice={originalPrice}
+					rating={0}
+					reviewCount={0}
+				/>
 				<Link
 					href={`/products/${id}`}
 					className='bg-white p-2 rounded-full shadow-sm hover:bg-gray-100 transition-colors'

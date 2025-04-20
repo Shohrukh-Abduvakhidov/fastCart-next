@@ -1,9 +1,20 @@
-import React from 'react'
+'use client'
+import LoginForm from '@/entities/loginForm/ui/loginForm'
 
 const LoginPage = () => {
-  return (
-    <div>LoginPage</div>
-  )
+	return (
+		<div className='flex items-center justify-center min-h-screen bg-white'>
+			<div className='w-full max-w-md px-8 py-10 border border-gray-200 shadow-md rounded-md'>
+				<h2 className='text-2xl font-semibold text-center text-black'>
+					Log In to Exclusive
+				</h2>
+				<p className='text-sm text-center text-gray-600 mt-1'>
+					Enter your details below
+				</p>
+				<LoginForm />
+			</div>
+		</div>
+	)
 }
 
 export default LoginPage
