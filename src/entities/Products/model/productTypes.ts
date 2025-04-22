@@ -1,4 +1,7 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 export interface IProduct {
+	[x: string]: any
+	product: any
 	id: number | string
 	productName: string
 	image: string
@@ -6,7 +9,7 @@ export interface IProduct {
 	price: number
 	hasDiscount: boolean
 	discountPrice: number
-	quantity: number | string
+	quantity: number
 	productInMyCart: boolean
 	categoryId: number
 	categoryName: string

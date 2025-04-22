@@ -1,5 +1,4 @@
 'use client'
-/* eslint-disable @typescript-eslint/no-unused-vars */
 import { Button } from '@/shared/ui/button'
 import { Input } from '@/shared/ui/input'
 import { Eye, EyeOff } from 'lucide-react'
@@ -7,6 +6,7 @@ import React, { useEffect, useState } from 'react'
 import { usePostRegistrationMutation } from '../api/registrationApi'
 import { IUser } from '../model/types'
 import { useRouter } from 'next/navigation'
+import { useTranslations } from 'next-intl'
 
 const RegistrationForm = () => {
 	const [postRegistation, { data }] = usePostRegistrationMutation()
@@ -17,6 +17,10 @@ const RegistrationForm = () => {
 	const [email, setEmail] = useState<string>('')
 	const [pass, setPass] = useState<string>('')
 	const [confPass, setConfPass] = useState<string>('')
+
+	const t = useTranslations('registration')
+	const router = useRouter()
+
 	async function handleSubmit(event: { preventDefault: () => void }) {
 		event.preventDefault()
 		const newUser: IUser = {
@@ -26,7 +30,6 @@ const RegistrationForm = () => {
 			password: pass,
 			confirmPassword: confPass,
 		}
-		console.log(newUser)
 		try {
 			await postRegistation(newUser).unwrap()
 		} catch (error) {
@@ -34,78 +37,72 @@ const RegistrationForm = () => {
 		}
 	}
 
-	const router = useRouter()
 	useEffect(() => {
-		if (data?.statusCode == 200) router.push('/')
+		if (data?.statusCode === 200) router.push('/login')
 	}, [data?.statusCode, router])
+
 	return (
-		<>
-			<form onSubmit={handleSubmit} className='mt-6 space-y-4'>
+		<form onSubmit={handleSubmit} className='mt-6 space-y-4'>
+			<Input
+				value={name}
+				onChange={e => setName(e.target.value)}
+				type='text'
+				placeholder={t('name')}
+			/>
+			<Input
+				value={phone}
+				onChange={e => setPhone(e.target.value)}
+				type='text'
+				placeholder={t('phone')}
+			/>
+			<Input
+				value={email}
+				onChange={e => setEmail(e.target.value)}
+				type='email'
+				placeholder={t('email')}
+			/>
+			<div className='relative'>
 				<Input
-					value={name}
-					onChange={e => setName(e.target.value)}
-					type='text'
-					placeholder='Name'
+					value={pass}
+					onChange={e => setPass(e.target.value)}
+					type={isPass ? 'text' : 'password'}
+					placeholder={t('password')}
 				/>
-				<Input
-					value={phone}
-					onChange={e => setPhone(e.target.value)}
-					type='text'
-					placeholder='phone number'
-				/>
-				<Input
-					value={email}
-					onChange={e => setEmail(e.target.value)}
-					type='email'
-					placeholder='Email'
-				/>
-				<div className='relative'>
-					<Input
-						value={pass}
-						onChange={e => setPass(e.target.value)}
-						type={isPass ? 'text' : 'password'}
-						placeholder='Password'
+				{isPass ? (
+					<EyeOff
+						onClick={() => setIsPass(!isPass)}
+						className='absolute cursor-pointer top-2 right-2'
 					/>
-					{isPass ? (
-						<EyeOff
-							onClick={() => setIsPass(!isPass)}
-							className='absolute cursor-pointer top-2 right-2'
-						/>
-					) : (
-						<Eye
-							onClick={() => setIsPass(!isPass)}
-							className='absolute cursor-pointer top-2 right-2'
-						/>
-					)}
-				</div>
-				<div className='relative'>
-					<Input
-						value={confPass}
-						onChange={e => setConfPass(e.target.value)}
-						type={isPass2 ? 'text' : 'password'}
-						placeholder='Confirm Password'
+				) : (
+					<Eye
+						onClick={() => setIsPass(!isPass)}
+						className='absolute cursor-pointer top-2 right-2'
 					/>
-					{isPass2 ? (
-						<EyeOff
-							onClick={() => setIsPass2(!isPass2)}
-							className='absolute cursor-pointer top-2 right-2'
-						/>
-					) : (
-						<Eye
-							onClick={() => setIsPass2(!isPass2)}
-							className='absolute cursor-pointer top-2 right-2'
-						/>
-					)}
-				</div>
-				<Button
-					typeof='submit'
-					type='submit'
-					className='w-full bg-[#DB4444] cursor-pointer'
-				>
-					Create Account
-				</Button>
-			</form>
-		</>
+				)}
+			</div>
+			<div className='relative'>
+				<Input
+					value={confPass}
+					onChange={e => setConfPass(e.target.value)}
+					type={isPass2 ? 'text' : 'password'}
+					placeholder={t('confirmPassword')}
+				/>
+				{isPass2 ? (
+					<EyeOff
+						onClick={() => setIsPass2(!isPass2)}
+						className='absolute cursor-pointer top-2 right-2'
+					/>
+				) : (
+					<Eye
+						onClick={() => setIsPass2(!isPass2)}
+						className='absolute cursor-pointer top-2 right-2'
+					/>
+				)}
+			</div>
+			<Button type='submit' className='w-full bg-[#DB4444] cursor-pointer'>
+				{t('createAccount')}
+			</Button>
+		</form>
 	)
 }
 

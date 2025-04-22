@@ -22,6 +22,9 @@ const Account: React.FC = () => {
 	const [dob, setDob] = useState<string>('')
 	const [imageS, setImageS] = useState<File | null>(null)
 
+	console.log('====================================')
+	console.log(data?.data)
+	console.log('====================================')
 	useEffect(() => {
 		setUser(JSON.parse(localStorage.getItem('decode_token') || '{}'))
 	}, [])
@@ -58,7 +61,7 @@ const Account: React.FC = () => {
 	}
 
 	if (isLoading) {
-		return <Loading/>
+		return <Loading />
 	}
 
 	return (

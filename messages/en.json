@@ -104,5 +104,59 @@
 				"description": "We return money within 30 days"
 			}
 		]
+	},
+	"newArrial": {
+		"Featured": "Featured",
+		"text2": "New Arrial",
+		"title1": "PlayStation 5",
+		"description1": "Black and white version of the PS5 available for sale.",
+		"title2": "Women's Collections",
+		"description2": "Featured women collections that give you another vibe.",
+		"title3": "Speakers",
+		"description3": "Amazon wireless speakers with amazing sound quality.",
+		"title4": "Perfume",
+		"description4": "GUCCI INTENSE OUD EDP perfume for a luxurious experience.",
+		"dostavka": "FREE AND FAST DELIVERY",
+		"textD1": "Free delivery for all orders over $50",
+		"dostavka2": "24/7 CUSTOMER SERVICE",
+		"textD2": "Friendly 24/7 customer support",
+		"dostavka3": "MONEY BACK GUARANTEE",
+		"textD3": "We return money within 30 days"
+	},
+	"login": {
+		"namePlaceholder": "Name",
+		"passwordPlaceholder": "Password",
+		"loginButton": "Log In",
+		"header": "Log In to Exclusive",
+		"header2": "Enter your details below"
+	},
+	"registration": {
+		"name": "Name",
+		"phone": "Phone Number",
+		"email": "Email",
+		"password": "Password",
+		"confirmPassword": "Confirm Password",
+		"createAccount": "Create Account",
+		"header": "Create an account",
+		"header2": "Enter your details below"
+	},
+	"newArrivals": {
+		"sectionTitle": "New Arrival",
+		"sectionLabel": "Featured",
+		"ps5Title": "PlayStation 5",
+		"ps5Desc": "Black and white version of the PS5 available for sale.",
+		"womensTitle": "Women's Collections",
+		"womensDesc": "Featured women collections that give you another vibe.",
+		"speakersTitle": "Speakers",
+		"speakersDesc": "Amazon wireless speakers with amazing sound quality.",
+		"perfumeTitle": "Perfume",
+		"perfumeDesc": "GUCCI INTENSE OUD EDP perfume for a luxurious experience.",
+		"shopNow": "Shop Now",
+		"service1Title": "FREE AND FAST DELIVERY",
+		"service1Desc": "Free delivery for all orders over $50",
+		"service2Title": "24/7 CUSTOMER SERVICE",
+		"service2Desc": "Friendly 24/7 customer support",
+		"service3Title": "MONEY BACK GUARANTEE",
+		"service3Desc": "We return money within 30 days"
 	}
 }

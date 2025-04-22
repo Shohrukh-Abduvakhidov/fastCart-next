@@ -5,6 +5,7 @@ import { useEffect, useState } from 'react'
 import { usePostLoginMutation } from '../api/loginApi'
 import { IUserLogin } from '../model/types'
 import { useRouter } from 'next/navigation'
+import { useTranslations } from 'next-intl'
 
 const LoginForm = () => {
 	const [postLogin, { data }] = usePostLoginMutation()
@@ -12,6 +13,8 @@ const LoginForm = () => {
 	const [pass, setPass] = useState<string>('')
 	const [name, setName] = useState<string>('')
 	const router = useRouter()
+	const t = useTranslations('login')
+
 	async function handleLogin(event: { preventDefault: () => void }) {
 		event.preventDefault()
 		const loginUser: IUserLogin = {
@@ -31,43 +34,38 @@ const LoginForm = () => {
 			router.push('/')
 		}
 	}, [data?.data, router])
+
 	return (
-		<>
-			<form onSubmit={handleLogin} className='mt-6 py-[40px] space-y-4'>
+		<form onSubmit={handleLogin} className='mt-6 py-[40px] space-y-4'>
+			<Input
+				value={name}
+				onChange={e => setName(e.target.value)}
+				type='text'
+				placeholder={t('namePlaceholder')}
+			/>
+			<div className='relative'>
 				<Input
-					value={name}
-					onChange={e => setName(e.target.value)}
-					type='text'
-					placeholder='Name'
+					value={pass}
+					onChange={e => setPass(e.target.value)}
+					type={isPass ? 'text' : 'password'}
+					placeholder={t('passwordPlaceholder')}
 				/>
-				<div className='relative'>
-					<Input
-						value={pass}
-						onChange={e => setPass(e.target.value)}
-						type={isPass ? 'text' : 'password'}
-						placeholder='Password'
+				{isPass ? (
+					<EyeOff
+						onClick={() => setIsPass(!isPass)}
+						className='absolute cursor-pointer top-2 right-2'
 					/>
-					{isPass ? (
-						<EyeOff
-							onClick={() => setIsPass(!isPass)}
-							className='absolute cursor-pointer top-2 right-2'
-						/>
-					) : (
-						<Eye
-							onClick={() => setIsPass(!isPass)}
-							className='absolute cursor-pointer top-2 right-2'
-						/>
-					)}
-				</div>
-				<Button
-					typeof='submit'
-					type='submit'
-					className='w-full bg-[#DB4444] cursor-pointer'
-				>
-					Log In
-				</Button>
-			</form>
-		</>
+				) : (
+					<Eye
+						onClick={() => setIsPass(!isPass)}
+						className='absolute cursor-pointer top-2 right-2'
+					/>
+				)}
+			</div>
+			<Button type='submit' className='w-full bg-[#DB4444] cursor-pointer'>
+				{t('loginButton')}
+			</Button>
+		</form>
 	)
 }
 

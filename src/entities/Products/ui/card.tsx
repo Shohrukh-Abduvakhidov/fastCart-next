@@ -7,6 +7,7 @@ import { Heart, Eye, Star } from 'lucide-react'
 import { Button } from '@/shared/ui/button'
 import { cn } from '@/lib/utils'
 import { useState } from 'react'
+import { Toaster, toast } from 'react-hot-toast'
 import Link from 'next/link'
 import {
 	useAddProductInCartMutation,
@@ -39,12 +40,13 @@ export function ProductCard({
 	const [isHovered, setIsHovered] = useState(false)
 	const [addProductInCart] = useAddProductInCartMutation()
 	const { refetch } = useGetCartProductsQuery(undefined)
-
 	async function addProductCart() {
 		try {
 			await addProductInCart(id).unwrap()
+			toast.success('SuccesFully added Product in cart')
 			refetch()
 		} catch (error) {
+			toast.error('Не удалось добавить товар в корзину. Попробуйте позже.')
 			console.error(error)
 		}
 	}
@@ -58,7 +60,8 @@ export function ProductCard({
 			onMouseEnter={() => setIsHovered(true)}
 			onMouseLeave={() => setIsHovered(false)}
 		>
-			{discount && (
+			<Toaster />
+			{discount !== undefined && discount >= 1 && (
 				<div className='absolute z-20 top-3 left-3 bg-red-500 text-white text-sm font-medium px-2 py-1 rounded'>
 					-{Math.round(((originalPrice - discount) / originalPrice) * 100)}%
 				</div>
@@ -96,14 +99,14 @@ export function ProductCard({
 
 			<div
 				className={cn(
-					'absolute bottom-0 left-0 right-0 transition-transform duration-300 transform',
-					isHovered ? 'translate-y-0' : 'translate-y-full'
+					'absolute bottom-[137] left-0 right-0 transition-transform duration-300 transform',
+					isHovered ? 'translate-y-0' : 'translate-y-full hidden'
 				)}
 			>
 				<Button
 					onClick={addProductCart}
 					variant='default'
-					className='w-full cursor-pointer rounded-none bg-black hover:bg-black/80 h-12'
+					className='w-full cursor-pointer rounded-md bg-black hover:bg-black/80 h-12'
 				>
 					Add To Cart
 				</Button>

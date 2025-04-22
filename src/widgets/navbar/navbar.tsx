@@ -21,7 +21,6 @@ const Navbar = () => {
 	const [open, setOpen] = useState<boolean>(false)
 	const dispatch = useDispatch()
 	const stateModal = useSelector((state: RootState) => state.profile.isOpen)
-
 	return (
 		<>
 			{/* Desktop Navbar */}

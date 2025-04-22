@@ -5,6 +5,7 @@ import { IProduct2 } from '@/entities/Products/model/productTypes'
 import { ProductCardProps } from '@/entities/Products/ui/card'
 import { Heart } from 'lucide-react'
 import React, { useState, useEffect } from 'react'
+import toast, { Toaster } from 'react-hot-toast'
 
 const WishListBtn = ({
 	id,
@@ -48,29 +49,33 @@ const WishListBtn = ({
 		const existing = JSON.parse(
 			localStorage.getItem('wishList') || '[]'
 		) as IProduct2[]
-
 		const exists = existing.some(el => el.id === product.id)
 
 		if (!exists) {
 			const updated = [...existing, product]
 			localStorage.setItem('wishList', JSON.stringify(updated))
 			console.log('Добавлен в избранное:', product)
+			toast.success('Succesfuly add product In WishList')
 			setIsSaved(true)
 		} else {
 			console.log('Продукт уже в избранном.')
+			toast.error('Продукт уже в избранном.')
 		}
 	}
 
 	return (
-		<button
-			onClick={addProduct}
-			type='button'
-			className='bg-white p-2 rounded-full cursor-pointer shadow-sm hover:bg-gray-100 transition-colors'
-		>
-			<Heart
-				className={`h-5 w-5 ${isSaved ? 'text-red-500' : 'bg-transparent'}`}
-			/>
-		</button>
+		<>
+			<Toaster />
+			<button
+				onClick={addProduct}
+				type='button'
+				className='bg-white p-2 rounded-full cursor-pointer shadow-sm hover:bg-gray-100 transition-colors'
+			>
+				<Heart
+					className={`h-5 w-5 ${isSaved ? 'text-red-500' : 'bg-transparent'}`}
+				/>
+			</button>
+		</>
 	)
 }
 

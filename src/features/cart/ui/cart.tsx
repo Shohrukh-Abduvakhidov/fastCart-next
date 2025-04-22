@@ -11,6 +11,7 @@ import { ICartProduct } from '../model/types'
 import { Button } from '@/shared/ui/button'
 import { X } from 'lucide-react'
 import Counter from '@/shared/ui/counter'
+import toast, { Toaster } from 'react-hot-toast'
 
 const CartComponent = () => {
 	const {
@@ -25,6 +26,7 @@ const CartComponent = () => {
 		try {
 			await deleteProductInCart(id).unwrap()
 			refetch()
+			toast.success('SuccesFuly delete product in cart!')
 		} catch (error) {
 			console.error(error)
 		}
@@ -33,6 +35,7 @@ const CartComponent = () => {
 		try {
 			await clearCart().unwrap()
 			refetch()
+			toast.success('SuccesFuly clear cart!')
 		} catch (error) {
 			console.error(error)
 		}
@@ -43,6 +46,7 @@ const CartComponent = () => {
 
 	return (
 		<div className='p-4 md:p-10'>
+			<Toaster />
 			<h1 className='text-xl font-semibold mb-6'>
 				Cart{' '}
 				<span className='text-black'>
@@ -99,7 +103,10 @@ const CartComponent = () => {
 							</Button>
 						</Link>
 						<div className='flex gap-2'>
-							<Button onClick={() => refetch()} className='border cursor-pointer border-black px-6 py-2 rounded'>
+							<Button
+								onClick={() => refetch()}
+								className='border cursor-pointer border-black px-6 py-2 rounded'
+							>
 								Update Cart
 							</Button>
 							<Button

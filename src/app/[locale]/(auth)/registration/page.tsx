@@ -4,18 +4,18 @@ import RegistrationForm from '@/entities/registrationForm/ui/registrationForm'
 
 import { Button } from '@/shared/ui/button'
 import { Separator } from '@/shared/ui/separator'
+import { useTranslations } from 'next-intl'
 import Link from 'next/link'
 
 const SignupForm = () => {
+	const t = useTranslations('registration')
 	return (
 		<div className='flex items-center justify-center min-h-screen bg-white'>
 			<div className='w-full max-w-md px-8 py-10 border border-gray-200 shadow-md rounded-md'>
 				<h2 className='text-2xl font-semibold text-center text-black'>
-					Create an account
+					{t('header')}
 				</h2>
-				<p className='text-sm text-center text-gray-600 mt-1'>
-					Enter your details below
-				</p>
+				<p className='text-sm text-center text-gray-600 mt-1'>{t('header2')}</p>
 				<RegistrationForm />
 				<div className='my-4'>
 					<Separator className='mb-2' />

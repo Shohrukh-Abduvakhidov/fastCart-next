@@ -1,6 +1,10 @@
+'use client'
+/* eslint-disable react-hooks/rules-of-hooks */
 import Image, { StaticImageData } from 'next/image'
 import { Clock, Headphones, ShieldCheck } from 'lucide-react'
 import { Button } from '@/shared/ui/button'
+import { useTranslations } from 'next-intl'
+
 import ps5 from '@/app/assets/ps5-slim-goedkope-playstation_large 1.png'
 import womans from '@/app/assets/attractive-woman-wearing-hat-posing-black-background 1.png'
 import speakers from '@/app/assets/Frame 686.png'
@@ -19,6 +23,8 @@ function ProductCard({
 	image,
 	size = 'small',
 }: ProductCardProps) {
+	const t = useTranslations('newArrivals')
+
 	return (
 		<div
 			className={`relative overflow-hidden rounded-lg ${
@@ -46,7 +52,7 @@ function ProductCard({
 					variant='outline'
 					className='w-fit bg-transparent text-white border-white hover:bg-white hover:text-black transition-colors'
 				>
-					Shop Now
+					{t('shopNow')}
 				</Button>
 			</div>
 		</div>
@@ -54,45 +60,47 @@ function ProductCard({
 }
 
 export function NewArrivals() {
+	const t = useTranslations('newArrivals')
+
 	return (
 		<section className='w-full py-12'>
 			<div className='container px-4 mx-auto'>
-				{/* Header */}
 				<div className='mb-8'>
 					<div className='flex items-center gap-2 mb-2'>
 						<div className='w-1 h-6 bg-red-500'></div>
-						<span className='text-red-500 text-sm font-medium'>Featured</span>
+						<span className='text-red-500 text-sm font-medium'>
+							{t('sectionLabel')}
+						</span>
 					</div>
-					<h2 className='text-2xl md:text-3xl font-bold'>New Arrival</h2>
+					<h2 className='text-2xl md:text-3xl font-bold'>
+						{t('sectionTitle')}
+					</h2>
 				</div>
 
-				{/* Product Grid */}
-				<div className='grid lg:grid-cols-4 lg:gap-4  gap-8 mb-16'>
-					{/* Large PS5 card on the left */}
+				<div className='grid lg:grid-cols-4 lg:gap-4 gap-8 mb-16'>
 					<ProductCard
-						title='PlayStation 5'
-						description='Black and white version of the PS5 available for sale.'
+						title={t('ps5Title')}
+						description={t('ps5Desc')}
 						image={ps5}
 						size='large'
 					/>
 
-					{/* Right column with 3 smaller cards */}
 					<div className='col-span-2 grid lg:grid-rows-2 gap-4'>
 						<ProductCard
-							title="Women's Collections"
-							description='Featured women collections that give you another vibe.'
+							title={t('womensTitle')}
+							description={t('womensDesc')}
 							image={womans}
 						/>
 
 						<div className='grid lg:grid-cols-2 gap-4'>
 							<ProductCard
-								title='Speakers'
-								description='Amazon wireless speakers with amazing sound quality.'
+								title={t('speakersTitle')}
+								description={t('speakersDesc')}
 								image={speakers}
 							/>
 							<ProductCard
-								title='Perfume'
-								description='GUCCI INTENSE OUD EDP perfume for a luxurious experience.'
+								title={t('perfumeTitle')}
+								description={t('perfumeDesc')}
 								image={parfum}
 							/>
 						</div>
@@ -105,28 +113,22 @@ export function NewArrivals() {
 						<div className='bg-gray-100 p-4 rounded-full mb-4'>
 							<Clock className='h-6 w-6' />
 						</div>
-						<h3 className='font-bold text-lg mb-2'>FREE AND FAST DELIVERY</h3>
-						<p className='text-sm text-gray-500'>
-							Free delivery for all orders over $50
-						</p>
+						<h3 className='font-bold text-lg mb-2'>{t('service1Title')}</h3>
+						<p className='text-sm text-gray-500'>{t('service1Desc')}</p>
 					</div>
 					<div className='flex flex-col items-center text-center'>
 						<div className='bg-gray-100 p-4 rounded-full mb-4'>
 							<Headphones className='h-6 w-6' />
 						</div>
-						<h3 className='font-bold text-lg mb-2'>24/7 CUSTOMER SERVICE</h3>
-						<p className='text-sm text-gray-500'>
-							Friendly 24/7 customer support
-						</p>
+						<h3 className='font-bold text-lg mb-2'>{t('service2Title')}</h3>
+						<p className='text-sm text-gray-500'>{t('service2Desc')}</p>
 					</div>
 					<div className='flex flex-col items-center text-center'>
 						<div className='bg-gray-100 p-4 rounded-full mb-4'>
 							<ShieldCheck className='h-6 w-6' />
 						</div>
-						<h3 className='font-bold text-lg mb-2'>MONEY BACK GUARANTEE</h3>
-						<p className='text-sm text-gray-500'>
-							We return money within 30 days
-						</p>
+						<h3 className='font-bold text-lg mb-2'>{t('service3Title')}</h3>
+						<p className='text-sm text-gray-500'>{t('service3Desc')}</p>
 					</div>
 				</div>
 			</div>

@@ -4,6 +4,7 @@ import { IProduct2 } from '@/entities/Products/model/productTypes'
 import { ProductCard } from '@/entities/Products/ui/card'
 import { Trash2 } from 'lucide-react'
 import React, { useEffect, useState } from 'react'
+import toast, { Toaster } from 'react-hot-toast'
 
 const WishlistPage = () => {
 	const [products, setProducts] = useState<IProduct2[]>([])
@@ -18,10 +19,12 @@ const WishlistPage = () => {
 		const fillteredProducts = products.filter(product => product.id !== id)
 		setProducts(fillteredProducts)
 		localStorage.setItem('wishList', JSON.stringify(fillteredProducts))
+		toast.success('SuccesFuly delete product in  wishList!')
 	}
 
 	return (
 		<div className='pb-[100px]'>
+			<Toaster />
 			<div className='flex w-[90%] m-auto items-center justify-between'>
 				<p className='text-[20px] font-bold'>
 					WishList <span>({products?.length})</span>
