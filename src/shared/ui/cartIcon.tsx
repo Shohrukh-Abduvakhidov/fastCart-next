@@ -6,9 +6,6 @@ import React from 'react'
 
 const CartIcon = () => {
 	const { data } = useGetCartProductsQuery(undefined)
-	console.log('====================================')
-	console.log(data?.data[0]?.totalProducts)
-	console.log('====================================')
 	return (
 		<div className='relative'>
 			{data?.data[0]?.totalProducts >= 1 && (
