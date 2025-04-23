@@ -4,6 +4,7 @@
 import { useGetProductByIdQuery } from '@/entities/Products/api/productApi'
 import { Button } from '@/shared/ui/button'
 import Loading from '@/shared/ui/loading/loading'
+import WishListBtn from '@/shared/ui/wishListBtn'
 import ImageGallery from '@/widgets/imageGalery/imageGalery'
 import { useParams } from 'next/navigation'
 
@@ -25,7 +26,9 @@ export default function ProductPage() {
 		return <div>Error loading product</div>
 	}
 
+	console.log('====================================4678970876543')
 	console.log(product?.data)
+	console.log('==============32456789087654324567890-======================')
 
 	return (
 		<div className='p-6 max-w-7xl mx-auto grid md:grid-cols-2 gap-10'>
@@ -51,22 +54,34 @@ export default function ProductPage() {
 				<div>
 					<span className='text-sm font-medium text-gray-700'>Colours:</span>
 					<div className='flex space-x-2 mt-2'>
-						<button className='w-6 h-6 rounded-full bg-red-500 border-2 border-gray-300' />
-						<button className='w-6 h-6 rounded-full bg-black border-2 border-gray-300' />
+						<button
+							style={{ backgroundColor: product?.data?.color }}
+							className='w-6 h-6 rounded-full border-2 p-4 border-gray-300'
+						/>
 					</div>
 				</div>
 
 				<div>
-					<span className='text-sm font-medium text-gray-700'>Size:</span>
-					<span className='text-sm font-medium text-gray-700'>
-						{' '}
+					<span className='text-sm font-medium text-gray-700'>Size:</span>{' '}
+					<br />
+					<Button className='text-sm font-medium text-gray-200 bg-gray-400'>
 						{product?.data?.size}
-					</span>
+					</Button>
 				</div>
-
-				<Button className='w-full cursor-pointer md:w-auto bg-red-500 text-white py-2 px-6 rounded-md hover:bg-red-600'>
-					Buy Now
-				</Button>
+				<div className='flex gap-[20px] items-center'>
+					<Button className='w-full cursor-pointer md:w-auto bg-red-500 text-white py-2 px-6 rounded-md hover:bg-red-600'>
+						Buy Now
+					</Button>
+					<WishListBtn
+						id={product?.data?.id}
+						name={product?.data?.productName}
+						image={product?.data?.images[0].images}
+						price={product?.data?.price}
+						originalPrice={product?.data?.price}
+						rating={product?.data?.discountPrice}
+						reviewCount={223}
+					/>
+				</div>
 
 				<div className='text-sm text-gray-600 space-y-1'>
 					<p>Free Delivery: Enter your postal code for delivery availability</p>
