@@ -6,6 +6,7 @@ import { Button } from '@/shared/ui/button'
 import Loading from '@/shared/ui/loading/loading'
 import WishListBtn from '@/shared/ui/wishListBtn'
 import ImageGallery from '@/widgets/imageGalery/imageGalery'
+import { RotateCcw, TruckIcon } from 'lucide-react'
 import { useParams } from 'next/navigation'
 
 export default function ProductPage() {
@@ -25,10 +26,6 @@ export default function ProductPage() {
 	if (error) {
 		return <div>Error loading product</div>
 	}
-
-	console.log('====================================4678970876543')
-	console.log(product?.data)
-	console.log('==============32456789087654324567890-======================')
 
 	return (
 		<div className='p-6 max-w-7xl mx-auto grid md:grid-cols-2 gap-10'>
@@ -69,7 +66,7 @@ export default function ProductPage() {
 					</Button>
 				</div>
 				<div className='flex gap-[20px] items-center'>
-					<Button className='w-full cursor-pointer md:w-auto bg-red-500 text-white py-2 px-6 rounded-md hover:bg-red-600'>
+					<Button className='w-[90%] lg:w-auto cursor-pointer md:w-auto bg-red-500 text-white py-2 px-6 rounded-md hover:bg-red-600'>
 						Buy Now
 					</Button>
 					<WishListBtn
@@ -84,8 +81,13 @@ export default function ProductPage() {
 				</div>
 
 				<div className='text-sm text-gray-600 space-y-1'>
-					<p>Free Delivery: Enter your postal code for delivery availability</p>
-					<p>Return Delivery: Free 30 days delivery returns</p>
+					<p className='text-[16px] flex gap-[10px] font-bold border-[2px] p-2 text-[black] border-[#7b7b7b]'>
+						<TruckIcon />
+						Free Delivery: <br /> Enter your postal code for delivery availability
+					</p>
+					<p className='text-[16px] flex gap-[10px] font-bold border-[2px] p-2 text-[black] border-[#5f5f5f]'>
+					<RotateCcw/>Return Delivery: <br /> Free 30 days delivery returns
+					</p>
 				</div>
 			</div>
 		</div>

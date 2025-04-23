@@ -12,15 +12,15 @@ export default function ImageGallery({ images }: ImageGalleryProps) {
 	const [activeIndex, setActiveIndex] = useState(0)
 
 	return (
-		<div className='flex gap-6'>
+		<div className='flex lg:flex-row flex-col-reverse gap-6'>
 			{/* Thumbnail preview */}
-			<div className='flex flex-col gap-4'>
+			<div className='flex flex-row lg:flex-col gap-4'>
 				{images.map((img, index) => (
 					<Card
 						key={img.id}
 						onClick={() => setActiveIndex(index)}
 						className={`cursor-pointer p-1 border ${
-							index === activeIndex ? 'border-blue-500' : 'border-transparent'
+							index === activeIndex ? 'border-blue-500 border-[5px]' : 'border-transparent'
 						}`}
 					>
 						<CardContent className='p-0 w-16 h-16 relative'>
