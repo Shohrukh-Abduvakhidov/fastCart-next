@@ -12,7 +12,6 @@ import { ProductList } from '@/widgets/productList/productList'
 export default function HomePage() {
 	const targetDate = new Date('2025-05-01T00:00:00Z')
 	const onComplete = () => {
-		console.log('timer complete')
 	}
 	return (
 		<>

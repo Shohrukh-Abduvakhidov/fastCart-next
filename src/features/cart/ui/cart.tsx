@@ -1,6 +1,7 @@
 'use client'
 /* eslint-disable @next/next/no-img-element */
 import Link from 'next/link'
+import { FetchBaseQueryError } from '@reduxjs/toolkit/query'
 import {
 	useClearCartMutation,
 	useDeleteProductInCartMutation,
@@ -12,8 +13,11 @@ import { Button } from '@/shared/ui/button'
 import { X } from 'lucide-react'
 import Counter from '@/shared/ui/counter'
 import toast, { Toaster } from 'react-hot-toast'
+import { useEffect } from 'react'
+import { useRouter } from 'next/navigation'
 
 const CartComponent = () => {
+	const router = useRouter()
 	const {
 		data: productsCart,
 		isLoading,
@@ -41,9 +45,14 @@ const CartComponent = () => {
 		}
 	}
 
+	useEffect(() => {
+		if (error && (error as FetchBaseQueryError).status === 401) {
+			router.push("/login")
+		}
+	}, [error,router])
+
 	if (isLoading) return <Loading />
 	if (error) return <p>error loading products in Cart</p>
-
 	return (
 		<div className='p-4 md:p-10'>
 			<Toaster />
